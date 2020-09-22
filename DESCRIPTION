@@ -1,0 +1,22 @@
+Package: eventbrite
+Type: Package
+Title: R Client for the Eventbrite API
+Version: 0.0.1
+Date: 2020-09-21
+Depends: R (>= 4.0)
+Imports: 
+    httr (>= 1.4.1),
+    jsonlite (>= 1.7.0)
+Suggests: testthat
+Authors@R: person("Victor", "Ordu", 
+              email = "victorordu@outlook.com",
+              role = c("aut", "cre"),
+              comment = c(ORCID = "0000-0003-3716-0668"))
+Maintainer: Victor Ordu <victorordu@outlook.com>
+Description: Functions tailored for interaction with the Eventbrite API and for
+    retrieval and preliminary transformation of data in forms suitable for
+    analysis within R.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
