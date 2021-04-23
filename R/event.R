@@ -10,10 +10,7 @@
 #' @export
 read_event_data <- function(eventid) {
   # TODO: Make more encompassting, beyond just attendee data...
-  apiurl <-
-    file.path("https://www.eventbriteapi.com/v3/events",
-              eventid,
-              "attendees")
+  apiurl <- file.path(.baseUrl(), "events", eventid, "attendees")
 
   try({
     r <- authenticate_apikey()

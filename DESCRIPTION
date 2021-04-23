@@ -1,8 +1,8 @@
 Package: eventbrite
 Type: Package
 Title: R Client for the Eventbrite API
-Version: 0.0.1
-Date: 2020-09-21
+Version: 0.0.1.9000
+Date: 2021-04-23
 Depends: R (>= 4.0)
 Imports: 
     httr (>= 1.4.1),
