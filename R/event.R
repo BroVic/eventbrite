@@ -4,21 +4,22 @@
 #'
 #' @param eventid Character vector of length \code{1L}; The ID of the given
 #' event whose data we want to poll.
+#' @param ... arguments passed to \code{authenticate_apikey}.
 #'
 #' @importFrom httr stop_for_status
 #'
 #' @export
-read_event_data <- function(eventid) {
+read_event_data <- function(eventid, ...) {
   # TODO: Make more encompassting, beyond just attendee data...
   apiurl <- file.path(.baseUrl(), "events", eventid, "attendees")
 
   try({
-    r <- authenticate_apikey()
+    r <- authenticate_apikey(...)
     stop_for_status(r)
   })
 
   # pageInfo <- att.list$pagination
-  att.list <- .downloadPage(apiurl)
+  att.list <- .downloadPage(apiurl, ...)
 
   for(i in seq_len(.getPageCount(att.list)))
     att.list$pagination <- NULL
