@@ -10,7 +10,7 @@ read_event_data(eventid, ...)
 \item{eventid}{Character vector of length \code{1L}; The ID of the given
 event whose data we want to poll.}
 
-\item{...}{arguments passed to \code{authenticate_apikey}.}
+\item{...}{arguments passed to \code{authorize_api_key}.}
 }
 \description{
 Reads data on events from the server

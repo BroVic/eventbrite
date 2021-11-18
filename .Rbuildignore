@@ -4,3 +4,4 @@
 ^sandbox$
 ^\.github$
 ^README\.Rmd$
+^\.httr-oauth$
