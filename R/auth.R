@@ -62,8 +62,8 @@ apiPath <- function()
 #' 
 #' @export
 setup_eventbrite_oauth <- function(api_key = NULL, client_secret = NULL) {
-  .defApp <- list(ApiKey = "EKSSGY6QXISUY4Y2GA", 
-                  ClientSecret = "2SYHEIIRCYJUGZQ65J4QKCPD5IW5RWELNTB3UXO7PDUFDRN2BY")
+  .defApp <- list(ApiKey = "XXXXXXXXXXXXXXXXXX", 
+                  ClientSecret = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
   if (is.null(api_key))
     api_key <- .defApp$ApiKey
   if (is.null(client_secret))
