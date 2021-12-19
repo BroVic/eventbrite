@@ -2,13 +2,13 @@
 #' @importFrom httr add_headers
 #' @importFrom httr status_code
 #' @importFrom httr stop_for_status
-.downloadPage <- function(url, obj = NULL, ...)
+.downloadPage <- function(url, obj = NULL, token)
 {
   if (is.null(obj)) {
     tryCatch({
       r <-
         GET(url,
-            add_headers(Authorization = paste("Bearer", ...)))
+            add_headers(Authorization = paste("Bearer", token)))
     }, error = function(e)
       stop(e))
   }
@@ -17,7 +17,7 @@
       r <-
         GET(
           url,
-          add_headers(Authorization = paste("Bearer", ...)),
+          add_headers(Authorization = paste("Bearer", token)),
           query = list(continuation = .getContinuationToken(obj))
         )
     },
@@ -32,7 +32,7 @@
   rlist <- .convertToList(r)
 
   if (.hasMoreItems(rlist)) {
-    data <- .downloadPage(url, rlist, ...)
+    data <- .downloadPage(url, rlist, token)
     rlist <- append(rlist, data)
   }
   rlist

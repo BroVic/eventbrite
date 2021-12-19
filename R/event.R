@@ -1,3 +1,13 @@
+#' List Owned Events
+#' 
+#' Fetch a list of events owned by the user from the Eventbrite API
+#' 
+#' 
+read_events <- function(token)
+{
+  
+}
+
 #' Read Event Data
 #'
 #' Reads data on events from the server
@@ -9,17 +19,17 @@
 #' @importFrom httr stop_for_status
 #'
 #' @export
-read_event_data <- function(eventid, ...) {
+read_event_data <- function(eventid, token) {
   # TODO: Make more encompassing, beyond just attendee data...
-  apiurl <- file.path(base_url(), "events", eventid, "attendees")
+  apiurl <- file.path(api_baseurl(), "events", eventid, "attendees")
 
-  try({
-    r <- authorize_api_key(...)
-    stop_for_status(r)
-  })
+  # try({
+  #   r <- get_api_response(token)  # TODO: Original intent?
+  #   stop_for_status(r)
+  # })
 
   # pageInfo <- att.list$pagination
-  att.list <- .downloadPage(apiurl, ...)
+  att.list <- .downloadPage(apiurl, token = token)
 
   for(i in seq_len(.getPageCount(att.list)))
     att.list$pagination <- NULL

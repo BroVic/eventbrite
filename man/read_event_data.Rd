@@ -4,7 +4,7 @@
 \alias{read_event_data}
 \title{Read Event Data}
 \usage{
-read_event_data(eventid, ...)
+read_event_data(eventid, token)
 }
 \arguments{
 \item{eventid}{Character vector of length \code{1L}; The ID of the given
