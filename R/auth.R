@@ -74,8 +74,8 @@ get_api_response.default <- function(token)
 
 
 .build_call_url <- function(endpoint) {
-  stopifnot(is.character(endpoint))
-  .constructUrl(api_baseurl(), .validate_endpoint(endpoint))
+  ep <- .validate_endpoint(endpoint)
+  .constructUrl(api_baseurl(), ep)
 }
 
 
