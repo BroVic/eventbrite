@@ -87,8 +87,8 @@ get_api_response.default <- function(token)
 #' 
 #' Will set up OAuth for the user, with the package acting as 'client'.
 #' 
-#' @param api_key The app's API Key.
-#' @param client_secret The app's Client Secret.
+#' @param api_key The application's API Key.
+#' @param client_secret The application's \emph{Client Secret}.
 #' 
 #' @importFrom httr oauth_endpoint
 #' @importFrom httr oauth_app
@@ -98,17 +98,36 @@ get_api_response.default <- function(token)
 #' 
 #' @export
 setup_eventbrite_oauth <- function(api_key = NULL, client_secret = NULL) {
-  .defApp <- list(api.key = creds$api.key, 
+  defApp <- list(api.key = creds$api.key, 
                   client.secret = creds$client.secret)
   
   if (is.null(api_key))
-    api_key <- .defApp$api.key
+    api_key <- defApp$api.key
   
   if (is.null(client_secret))
-    client_secret <- .defApp$client.secret
+    client_secret <- defApp$client.secret
   
   oauth2.0_token(
     oauth_endpoint(authorize = .fUrl("authorize"), access = .fUrl("token")),
     oauth_app("rEventbrite", key = api_key, secret = client_secret)
   )
+}
+
+
+
+
+
+#' @importFrom httr content
+get_user <- function(token, element = NULL) 
+{
+  if (!is.character(token) && !inherits(token, "Token"))
+    stop("'token' must be of class 'character' or 'Token'")
+  r <- get_api_response(token)
+  r <- stop_for_status(r)
+  c <- content(r)
+  if (!is.null(element)) {
+    elem <- match.arg(element, c("id", "name")) # elements of 'User' object
+    c <- c[[elem]]
+  }
+  invisible(c)
 }
