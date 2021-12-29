@@ -2,18 +2,18 @@
 % Please edit documentation in R/auth.R
 \name{setup_eventbrite_oauth}
 \alias{setup_eventbrite_oauth}
-\title{Set up OAuth 2.0 for Eventbrite}
+\title{Set up OAuth 2.0 for the Eventbrite API}
 \usage{
 setup_eventbrite_oauth(api_key = NULL, client_secret = NULL)
 }
 \arguments{
-\item{api_key}{The app's API Key.}
+\item{api_key}{The application's API Key.}
 
-\item{client_secret}{The app's Client Secret.}
+\item{client_secret}{The application's \emph{Client Secret}.}
 }
 \value{
 An R6 object of type 'Token'.
 }
 \description{
-Will set up OAuth for the user, with the package acting as 'client'.
+Will set up OAuth for the user, with the package playing the role of 'client'.
 }
