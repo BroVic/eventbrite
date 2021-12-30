@@ -30,7 +30,7 @@ get_user <- function(token, element = NULL)
 # @param token The token, either an object of class \code{character} or 
 # \code{Token}.
 # @param endpoint The API endpoint, i.e. the path of a URL
-getResource <- function(token, endpoint)
+getResource <- function(token, ...)
   UseMethod("getResource")
 
 
@@ -72,7 +72,7 @@ getResource.character <- function(token, endpoint = NULL)
 
 
 
-getResource.default <- function(token)
+getResource.default <- function(token, ...)
 {
   message(
     "A method has not been defined for objects of class",
@@ -101,5 +101,5 @@ getResource.default <- function(token)
 
 .build_call_url <- function(endpoint) {
   ep <- .validate_endpoint(endpoint)
-  .constructUrl(api_baseurl(), ep)
+  constructUrl(apiBaseUrl(), ep)
 }

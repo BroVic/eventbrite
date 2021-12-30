@@ -21,7 +21,7 @@ read_events <- function(token)
 #' @export
 read_event_data <- function(eventid, token) {
   # TODO: Make more encompassing, beyond just attendee data...
-  apiurl <- file.path(api_baseurl(), "events", eventid, "attendees")
+  apiurl <- file.path(apiBaseUrl(), "events", eventid, "attendees")
 
   # try({
   #   r <- getResource(token)  # TODO: Original intent?

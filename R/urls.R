@@ -1,4 +1,12 @@
-api_baseurl <- function() {
+hostUrl <- function() 
+{
+  "https://www.eventbrite.com"
+}
+
+
+
+apiBaseUrl <- function()
+{
   "https://www.eventbriteapi.com/v3"
 }
 
@@ -7,7 +15,8 @@ api_baseurl <- function() {
 
 
 
-api_keys_url <- function() {
+api_keys_url <- function() 
+{
   "https://www.eventbrite.com/platform/api-keys/"
 }
 
@@ -15,10 +24,10 @@ api_keys_url <- function() {
 
 
 
-.fUrl <- function(end) {
-  oaurl <- "https://www.eventbrite.com"
+oauthUrl <- function(end) {
+  stopifnot(is.character(end))
   pth <- paste("oauth", end, sep = "/")
-  .constructUrl(oaurl, pth)
+  constructUrl(hostUrl(), pth)
 }
 
 
@@ -44,8 +53,10 @@ apiPath <- function(endpoint = NULL) {
 
 #' @importFrom httr parse_url
 #' @importFrom httr build_url
-.constructUrl <- function(url, path) {
-    url <- parse_url(url)
-    url$path <- path
-    build_url(url)
-  }
+constructUrl <- function(url, path) 
+{
+  stopifnot(is.character(url), is.character(path))
+  url <- parse_url(url)
+  url$path <- path
+  build_url(url)
+}
