@@ -2,8 +2,9 @@
 #' 
 #' Will set up OAuth for the user, with the package playing the role of 'client'.
 #' 
-#' @param api.key The application's API Key.
+#' @param api.key The application's \emph{API Key}.
 #' @param client.secret The application's \emph{Client Secret}.
+#' @param ... Arguments passed to \code{\link[httr]{oauth2.0_token}}.
 #' 
 #' @importFrom httr oauth_endpoint
 #' @importFrom httr oauth_app
@@ -12,16 +13,21 @@
 #' @return An R6 object of type 'Token'.
 #' 
 #' @export
-setup_eventbrite_oauth <- function(api.key = NULL, client.secret = NULL) {
+setup_eventbrite_oauth <- function(api.key = NULL, client.secret = NULL, ...) {
   defApp <- getDefApp()
   
-  if (is.null(api.key) && is.null(client.secret)) {
+  keyIsNul <- is.null(api.key)
+  secretIsNul <- is.null(client.secret)
+  if (xor(keyIsNul, secretIsNul))
+    stop("If at all, both 'api.key' and 'client.secret' must be provided")
+  if (keyIsNul && secretIsNul) {
     api.key <- defApp$api.key
     client.secret <- defApp$client.secret
   }
   
   oauth2.0_token(
     oauth_endpoint(authorize = oauthUrl("authorize"), access = oauthUrl("token")),
-    oauth_app("rEventbrite", key = api.key, secret = client.secret)
+    oauth_app("rEventbrite", key = api.key, secret = client.secret),
+    ...
   )
 }

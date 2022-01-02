@@ -40,10 +40,10 @@ getResource <- function(token, ...)
 
 #' @importFrom httr GET
 #' @importFrom httr config
-getResource.Token <- function(token, endpoint = NULL)
+getResource.Token <- function(token, endpoint = NULL, ...)
 {
   url <- .build_call_url(endpoint) 
-  GET(url, config = config(token = token))
+  GET(url, config = config(token = token), ...)
 }
 
 
@@ -53,7 +53,7 @@ getResource.Token <- function(token, endpoint = NULL)
 
 #' @importFrom httr GET
 #' @importFrom httr add_headers
-getResource.character <- function(token, endpoint = NULL) 
+getResource.character <- function(token, endpoint = NULL, ...) 
 {
   if (length(token) > 1L) {
     token <- token[1]
@@ -63,7 +63,9 @@ getResource.character <- function(token, endpoint = NULL)
   url <- .build_call_url(endpoint)
   
   try({
-    GET(url, config = add_headers(Authorization = paste("Bearer", token)))
+    GET(url, 
+        config = add_headers(Authorization = paste("Bearer", token)),
+        ...)
   })
 }
 

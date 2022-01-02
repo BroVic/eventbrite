@@ -1,5 +1,5 @@
 errors <- function() {
-  list(
+  cbind(
     status.code = c(
       "301",
       "400",

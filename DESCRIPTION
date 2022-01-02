@@ -6,7 +6,8 @@ Date: 2021-12-24
 Depends: R (>= 4.0)
 Imports: 
     httr (>= 1.4.1),
-    jsonlite (>= 1.7.0)
+    jsonlite (>= 1.7.0),
+    magrittr (>= 2.0.0)
 Suggests: 
     testthat (>= 3.0.0)
 Authors@R: person("Victor", "Ordu", 

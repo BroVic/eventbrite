@@ -4,12 +4,14 @@
 \alias{setup_eventbrite_oauth}
 \title{Set up OAuth 2.0 for the Eventbrite API}
 \usage{
-setup_eventbrite_oauth(api.key = NULL, client.secret = NULL)
+setup_eventbrite_oauth(api.key = NULL, client.secret = NULL, ...)
 }
 \arguments{
-\item{api.key}{The application's API Key.}
+\item{api.key}{The application's \emph{API Key}.}
 
 \item{client.secret}{The application's \emph{Client Secret}.}
+
+\item{...}{Arguments passed to \code{\link[httr]{oauth2.0_token}}.}
 }
 \value{
 An R6 object of type 'Token'.

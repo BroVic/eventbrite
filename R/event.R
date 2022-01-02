@@ -29,7 +29,7 @@ read_event_data <- function(eventid, token) {
   # })
 
   # pageInfo <- att.list$pagination
-  att.list <- .downloadPage(apiurl, token = token)
+  att.list <- fetchPages(apiurl, token = token)
 
   for(i in seq_len(.getPageCount(att.list)))
     att.list$pagination <- NULL
