@@ -9,7 +9,7 @@ get_user(token, element = NULL)
 \arguments{
 \item{token}{The token.}
 
-\item{element}{The objects field.}
+\item{element}{The object's field.}
 }
 \description{
 Get a User object
