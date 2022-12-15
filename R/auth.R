@@ -13,21 +13,31 @@
 #' @return An R6 object of type 'Token'.
 #' 
 #' @export
-setup_eventbrite_oauth <- function(api.key = NULL, client.secret = NULL, ...) {
-  defApp <- getDefApp()
-  
-  keyIsNul <- is.null(api.key)
-  secretIsNul <- is.null(client.secret)
-  if (xor(keyIsNul, secretIsNul))
-    stop("If at all, both 'api.key' and 'client.secret' must be provided")
-  if (keyIsNul && secretIsNul) {
-    api.key <- defApp$api.key
-    client.secret <- defApp$client.secret
+setup_eventbrite_oauth <-
+  function(api.key = NULL,
+           client.secret = NULL,
+           ...) {
+    defApp <- getDefApp()
+    
+    keyIsNul <- is.null(api.key)
+    secretIsNul <- is.null(client.secret)
+    if (xor(keyIsNul, secretIsNul))
+      stop("If at all, both 'api.key' and 'client.secret' must be provided")
+    if (keyIsNul && secretIsNul) {
+      api.key <- defApp$api.key
+      client.secret <- defApp$client.secret
+    }
+    
+    oauthUrl <- function(end) {
+      pth <- paste("oauth", end, sep = "/")
+      constructUrl(hostUrl(), pth)
+    }
+    oauth2.0_token(
+      oauth_endpoint(
+        authorize = oauthUrl("authorize"),
+        access = oauthUrl("token")
+      ),
+      oauth_app("rEventbrite", key = api.key, secret = client.secret),
+      ...
+    )
   }
-  
-  oauth2.0_token(
-    oauth_endpoint(authorize = oauthUrl("authorize"), access = oauthUrl("token")),
-    oauth_app("rEventbrite", key = api.key, secret = client.secret),
-    ...
-  )
-}

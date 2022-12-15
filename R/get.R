@@ -1,8 +1,5 @@
 #' Get a User object
 #' 
-#' @importFrom httr content
-#' @importFrom httr stop_for_status
-#' 
 #' @param token The token.
 #' @param element The objects field.
 #' 
@@ -11,14 +8,12 @@ get_user <- function(token, element = NULL)
 {
   if (!is.character(token) && !inherits(token, "Token"))
     stop("'token' must be of class 'character' or 'Token'")
-  r <- getResource(token)
-  r <- stop_for_status(r)
-  c <- content(r)
+  c <- getContent(token, "users/me")
   if (!is.null(element)) {
     elem <- match.arg(element, c("id", "name")) # elements of 'User' object
     c <- c[[elem]]
   }
-  invisible(c)
+  c
 }
 
 
@@ -27,11 +22,54 @@ get_user <- function(token, element = NULL)
 
 
 
+get_organization <- function(token)
+{
+  # userid <- get_user(token, 'id')
+  getContent(token, "users/me/organizations")
+}
+
+
+
+
+get_event <- function(token, orgid)
+{
+  path <- sprintf("organizations/%s/events", orgid)
+  getContent(token, path)
+}
+
+
+
+
+
+get_attendee <- function(token, eventid)
+{
+  path <- sprintf("events/%s/attendees/", eventid)
+  getContent(token, path)
+}
+
+
+
+
+
+
+#' @importFrom httr content
+#' @importFrom httr stop_for_status
+getContent <- function(token, path, ...)
+{
+  r <- getApiResponse(token, path, ...)
+  stop_for_status(r)
+  content(r, 'text')
+}
+
+
+
+
+
 # @param token The token, either an object of class \code{character} or 
 # \code{Token}.
 # @param endpoint The API endpoint, i.e. the path of a URL
-getResource <- function(token, ...)
-  UseMethod("getResource")
+getApiResponse <- function(token, ...)
+  UseMethod("getApiResponse")
 
 
 
@@ -40,9 +78,9 @@ getResource <- function(token, ...)
 
 #' @importFrom httr GET
 #' @importFrom httr config
-getResource.Token <- function(token, endpoint = NULL, ...)
+getApiResponse.Token <- function(token, endpoint = character(), ...)
 {
-  url <- .build_call_url(endpoint) 
+  url <- .buildApiCallUrl(endpoint) 
   GET(url, config = config(token = token), ...)
 }
 
@@ -53,14 +91,14 @@ getResource.Token <- function(token, endpoint = NULL, ...)
 
 #' @importFrom httr GET
 #' @importFrom httr add_headers
-getResource.character <- function(token, endpoint = NULL, ...) 
+getApiResponse.character <- function(token, endpoint = character(), ...) 
 {
   if (length(token) > 1L) {
     token <- token[1]
     warning("Only the first element of 'token' was used")
   }
   
-  url <- .build_call_url(endpoint)
+  url <- .buildApiCallUrl(endpoint)
   
   try({
     GET(url, 
@@ -74,10 +112,10 @@ getResource.character <- function(token, endpoint = NULL, ...)
 
 
 
-getResource.default <- function(token, ...)
+getApiResponse.default <- function(token, ...)
 {
   message(
-    "A method has not been defined for objects of class",
+    "No method defined for objects of class",
     sQuote(class(token))
   )
 }
@@ -87,21 +125,8 @@ getResource.default <- function(token, ...)
 
 
 
-.validate_endpoint <- function(ep) {
-  if (is.null(ep))
-    return(apiPath(ep))
-  if (!is.character(ep))
-    stop("Argumeents passed as endpoints must of of type 'character'",
-         call. = FALSE)
-  invisible(ep)
-}
 
 
-
-
-
-
-.build_call_url <- function(endpoint) {
-  ep <- .validate_endpoint(endpoint)
-  constructUrl(apiBaseUrl(), ep)
+.buildApiCallUrl <- function(endpoint) {
+  constructUrl(apiBaseUrl(), endpoint)
 }

@@ -24,7 +24,7 @@ read_event_data <- function(eventid, token) {
   apiurl <- file.path(apiBaseUrl(), "events", eventid, "attendees")
 
   # try({
-  #   r <- getResource(token)  # TODO: Original intent?
+  #   r <- getApiResponse(token)  # TODO: Original intent?
   #   stop_for_status(r)
   # })
 

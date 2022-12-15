@@ -10,16 +10,11 @@ fetchPages <- function(url, obj = NULL, token)
     return(obj)
   tryCatch({
     contoken <- .getContinuationToken(obj)
-    r <- getResource(token, query = list(continuation = contoken))
-    httr::stop_for_status(
-      r,
-      paste("Reading data failed with status", status_code(r))
-    )
+    newobj <- getContent(token, query = list(continuation = contoken))
   },
   error = function(e)
     stop(e))
   
-  newobj <- httr::content(r)
   rlist <- append(obj, newobj)
   if (.hasMoreItems(newobj)) {
     data <- fetchPages(url, newobj, token)
@@ -27,6 +22,7 @@ fetchPages <- function(url, obj = NULL, token)
   }
   rlist
 }
+
 
 
 .hasMoreItems <- function(obj)
@@ -42,6 +38,7 @@ fetchPages <- function(url, obj = NULL, token)
 }
 
 
+
 # #' @importFrom httr content
 # #' @importFrom jsonlite fromJSON
 # .convertToList <- function(obj)
@@ -52,16 +49,21 @@ fetchPages <- function(url, obj = NULL, token)
 #                      simplifyDataFrame = TRUE)
 # }
 
+
+
 isPaginated <- function(obj)
 {
   stopifnot(is.vector(obj, 'list'))
   'pagination' %in% names(obj)
 }
 
+
+
 .getPageNumber <- function(obj)
 {
   obj$pagination$page_number
 }
+
 
 
 .getPageCount <- function(obj)
